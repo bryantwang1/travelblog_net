@@ -36,9 +36,8 @@ namespace TravelBlog.Controllers
 
         public IActionResult Details(int id)
         {
-            var thisPerson = db.People
+            Person thisPerson = db.People
                 .Include(people => people.Location)
-                .Include(people => people.Experience)
                 .FirstOrDefault(people => people.PersonId == id);
             return View(thisPerson);
         }
@@ -54,7 +53,7 @@ namespace TravelBlog.Controllers
         [HttpPost]
         public IActionResult Edit(Person person)
         {
-            db.Entry(person).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            db.Entry(person).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

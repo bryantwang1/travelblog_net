@@ -23,8 +23,7 @@ namespace TravelBlog.Controllers
             _signInManager = signInManager;
             _db = db;
         }
-
-        // GET: /<controller>/
+        
         public IActionResult Index()
         {
             return View();

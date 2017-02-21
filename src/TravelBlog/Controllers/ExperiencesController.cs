@@ -22,16 +22,13 @@ namespace TravelBlog.Controllers
         public IActionResult Create()
         {
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "LocationName");
-            
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Experience experience )
         {
-         
             db.Experiences.Add(experience);
-
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -54,7 +51,7 @@ namespace TravelBlog.Controllers
         [HttpPost]
         public IActionResult Edit(Experience experience)
         {
-            db.Entry(experience).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            db.Entry(experience).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

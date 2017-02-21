@@ -35,13 +35,11 @@ namespace TravelBlog.Controllers
 
         public IActionResult Details(int id)
         {
-            var thisLocation = db.Locations
+            Location thisLocation = db.Locations
                 .Include(locations => locations.Experiences)
                 .Include(locations => locations.Comments)
-                .ThenInclude(comments => comments.User)
                 .FirstOrDefault(locations => locations.LocationId == id);
-            var happenings = thisLocation.Experiences.ToList();
-       
+            List<Experience> happenings = thisLocation.Experiences.ToList();
             ViewBag.MyList =  happenings;
             return View(thisLocation);
         }

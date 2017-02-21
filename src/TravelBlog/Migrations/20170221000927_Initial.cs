@@ -177,25 +177,25 @@ namespace TravelBlog.Migrations
                 {
                     CommentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AppUserId = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
-                    LocationId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    LocationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,8 +207,7 @@ namespace TravelBlog.Migrations
                     ExperienceDescription = table.Column<string>(nullable: true),
                     ExperienceImage = table.Column<string>(nullable: true),
                     ExperienceName = table.Column<string>(nullable: true),
-                    LocationId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    LocationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -219,12 +218,6 @@ namespace TravelBlog.Migrations
                         principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Experiences_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,29 +230,40 @@ namespace TravelBlog.Migrations
                     LocationId = table.Column<int>(nullable: false),
                     PersonDescription = table.Column<string>(nullable: true),
                     PersonImage = table.Column<string>(nullable: true),
-                    PersonName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    PersonName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_People", x => x.PersonId);
                     table.ForeignKey(
-                        name: "FK_People_Experiences_ExperienceId",
-                        column: x => x.ExperienceId,
-                        principalTable: "Experiences",
-                        principalColumn: "ExperienceId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_People_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Suggestions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Approved = table.Column<bool>(nullable: false),
+                    DateSuggested = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    HasBeenVisited = table.Column<bool>(nullable: false),
+                    LocationId = table.Column<int>(nullable: true),
+                    Votes = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Suggestions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_People_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Suggestions_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "LocationId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -305,14 +309,14 @@ namespace TravelBlog.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_AppUserId",
+                table: "Comments",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_LocationId",
                 table: "Comments",
                 column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserId",
-                table: "Comments",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Experiences_LocationId",
@@ -320,19 +324,9 @@ namespace TravelBlog.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Experiences_UserId",
-                table: "Experiences",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Locations_UserId",
                 table: "Locations",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_People_ExperienceId",
-                table: "People",
-                column: "ExperienceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_LocationId",
@@ -340,9 +334,9 @@ namespace TravelBlog.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_People_UserId",
-                table: "People",
-                column: "UserId");
+                name: "IX_Suggestions_LocationId",
+                table: "Suggestions",
+                column: "LocationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -366,13 +360,16 @@ namespace TravelBlog.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "Experiences");
+
+            migrationBuilder.DropTable(
                 name: "People");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Suggestions");
 
             migrationBuilder.DropTable(
-                name: "Experiences");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Locations");
