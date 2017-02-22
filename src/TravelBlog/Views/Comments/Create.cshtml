@@ -8,12 +8,11 @@
 @using (Html.BeginForm())
 {
    <input type="hidden" value="@ViewBag.LocationId" name="locationId" />
-    <p>@ViewBag.LocationId</p> 
 
     @Html.LabelFor(model => model.Body)
     @Html.TextBoxFor(model => model.Body)
 
-    @Html.LabelFor(model => model.User.UserName)
-    @Html.TextBoxFor(model => model.User.UserName)
+    @*@Html.LabelFor(model => model.AppUser.UserName)
+    @Html.TextBoxFor(model => model.AppUser.UserName)*@
     <input type="submit" value="Add comment" />
 }

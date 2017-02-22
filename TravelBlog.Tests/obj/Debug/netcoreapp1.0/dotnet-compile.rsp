@@ -1,5 +1,5 @@
---temp-output:C:\Users\epicodus\Desktop\TravelBlog\TravelBlog.Tests\obj\Debug\netcoreapp1.0\
---out:C:\Users\epicodus\Desktop\TravelBlog\TravelBlog.Tests\bin\Debug\netcoreapp1.0\TravelBlog.Tests.dll
+--temp-output:C:\Users\epicodus\Desktop\TravelBlog_net\TravelBlog.Tests\obj\Debug\netcoreapp1.0\
+--out:C:\Users\epicodus\Desktop\TravelBlog_net\TravelBlog.Tests\bin\Debug\netcoreapp1.0\TravelBlog.Tests.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -204,7 +204,7 @@
 --reference:C:\Users\epicodus\.nuget\packages\xunit.extensibility.execution\2.1.0\lib\dotnet\xunit.execution.dotnet.dll
 --reference:C:\Users\epicodus\.nuget\packages\xunit.runner.reporters\2.2.0-beta2-build3300\lib\netstandard1.1\xunit.runner.reporters.dotnet.dll
 --reference:C:\Users\epicodus\.nuget\packages\xunit.runner.utility\2.2.0-beta2-build3300\lib\netstandard1.1\xunit.runner.utility.dotnet.dll
---reference:C:\Users\epicodus\Desktop\TravelBlog\src\TravelBlog\bin\Debug\netcoreapp1.0\TravelBlog.dll
-C:\Users\epicodus\Desktop\TravelBlog\TravelBlog.Tests\ControllerTests\SuggestionsControllerTest.cs
-C:\Users\epicodus\Desktop\TravelBlog\TravelBlog.Tests\ModelTests\TestDbContext.cs
-C:\Users\epicodus\Desktop\TravelBlog\TravelBlog.Tests\Properties\AssemblyInfo.cs
+--reference:C:\Users\epicodus\Desktop\TravelBlog_net\src\TravelBlog\bin\Debug\netcoreapp1.0\TravelBlog.dll
+C:\Users\epicodus\Desktop\TravelBlog_net\TravelBlog.Tests\ControllerTests\SuggestionsControllerTest.cs
+C:\Users\epicodus\Desktop\TravelBlog_net\TravelBlog.Tests\ModelTests\TestDbContext.cs
+C:\Users\epicodus\Desktop\TravelBlog_net\TravelBlog.Tests\Properties\AssemblyInfo.cs

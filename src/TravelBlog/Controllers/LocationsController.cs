@@ -37,10 +37,11 @@ namespace TravelBlog.Controllers
         {
             Location thisLocation = db.Locations
                 .Include(locations => locations.Experiences)
+                .Include(locations => locations.People)
+                .Include(Locations => Locations.Suggestions)
                 .Include(locations => locations.Comments)
+                    .ThenInclude(c => c.AppUser)
                 .FirstOrDefault(locations => locations.LocationId == id);
-            List<Experience> happenings = thisLocation.Experiences.ToList();
-            ViewBag.MyList =  happenings;
             return View(thisLocation);
         }
 

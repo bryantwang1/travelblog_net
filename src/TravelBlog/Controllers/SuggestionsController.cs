@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TravelBlog.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace TravelBlog.Controllers
 {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TravelBlog.Models;
 using Microsoft.AspNetCore.Identity;
 using TravelBlog.ViewModels;
+using System.Diagnostics;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,38 +38,50 @@ namespace TravelBlog.Controllers
         {
             var user = new ApplicationUser { UserName = model.Email };
 
-            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
+            if (model.Password == model.ConfirmPassword)
             {
-                return RedirectToAction("Index", "Home");
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
-            {
-                return View();
-            }
+            return View();
         }
         public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(string email, string password)
         {
-            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return View();
-            }
+            //Debug.WriteLine(stuff);
+            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(email, password, isPersistent: true, lockoutOnFailure: false);
+            return Json(email);
+            //if (result.Succeeded)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+            //else
+            //{
+            //    return View();
+            //}
         }
         [HttpPost]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult DoAjax()
+        {
+            return Content("Hey.", "text/plain");
+        }
+
+        public IActionResult HelloAjax()
+        {
+            return Content("Hello from the controller!", "text/plain");
         }
 
     }
